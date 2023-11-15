@@ -23,6 +23,8 @@ jobs:
       - name: Build
         run:
             sam build --use-container
+      - name: Check branch name
+        run: echo "Branch name is $GITHUB_REF"
       - name: Deploy
         run: |
           if [ github.ref == 'refs/heads/main' ]; then
