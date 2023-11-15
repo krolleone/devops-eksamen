@@ -2,13 +2,14 @@ on:
   push:
     branches:
       - main
+      - '*'
 
 defaults:
   run:
     working-directory: ./kjell
 
 jobs:
-  build-deploy:
+  build-or-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,5 +20,16 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
-      - run: sam build --use-container
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-exam-2041 --capabilities CAPABILITY_IAM --region eu-west-1
+      - name: Check Branch Name
+        run: echo "Branch name is $GITHUB_REF"
+        id: branch-check
+      - name: Build or Deploy
+        run: |
+          if [[ ${{ steps.branch-check.outputs.branch }} == 'refs/heads/main' ]]; then
+            sam build --use-container
+            sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-exam-2041 --capabilities CAPABILITY_IAM --region eu-west-1
+          else
+            sam build --use-container
+          fi
+        env:
+          BRANCH: ${{ steps.branch-check.outputs.branch }}
