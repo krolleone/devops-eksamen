@@ -24,7 +24,7 @@ jobs:
         run: |
           if [ $GITHUB_REF == 'refs/heads/main' ]; then
             sam build --use-container
-            sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-exam-2041 --capabilities CAPABILITY_IAM --region eu-west-1
+            sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM
           else
             sam build --use-container
           fi
