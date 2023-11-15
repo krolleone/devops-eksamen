@@ -25,11 +25,9 @@ jobs:
         id: branch-check
       - name: Build or Deploy
         run: |
-          if [[ ${{ steps.branch-check.outputs.branch }} == 'refs/heads/main' ]]; then
+          if: github.ref == 'refs/heads/master'
             sam build --use-container
             sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-exam-2041 --capabilities CAPABILITY_IAM --region eu-west-1
-          else
+          else:
             sam build --use-container
           fi
-        env:
-          BRANCH: ${{ steps.branch-check.outputs.branch }}
