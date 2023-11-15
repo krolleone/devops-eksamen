@@ -20,16 +20,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
-      - name: Check Branch Name
-        run: echo "Branch name is $GITHUB_REF"
-        id: branch-check
       - name: Build or Deploy
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
-            echo "INSIDE IF"
+          if [ $GITHUB_REF == 'refs/heads/main' ]; then
             sam build --use-container
             sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-exam-2041 --capabilities CAPABILITY_IAM --region eu-west-1
           else
-            echo "INSIDE ELSE"
             sam build --use-container
           fi
