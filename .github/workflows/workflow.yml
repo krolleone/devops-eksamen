@@ -24,5 +24,6 @@ jobs:
         run: sam build --use-container
       - name: Deploy
         run: |
-        if: [ github.ref == 'refs/heads/main' ]; then
-          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-exam-2041 --capabilities CAPABILITY_IAM --region eu-west-1
+        if: github.ref == 'refs/heads/main'
+          steps:
+            run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-exam-2041 --capabilities CAPABILITY_IAM --region eu-west-1
