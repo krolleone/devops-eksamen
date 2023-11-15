@@ -5,7 +5,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./hello_world
+    working-directory: ./kjell/hello_world
 
 jobs:
   build-deploy:
