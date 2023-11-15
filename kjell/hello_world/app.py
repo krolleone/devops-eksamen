@@ -20,8 +20,6 @@ os.environ['BUCKET_NAME'] = 'kan-2041'
 
 BUCKET_NAME = os.environ['BUCKET_NAME']
 
-print(BUCKET_NAME)
-
 def lambda_handler(event, context):
 
     # List all objects in the S3 bucket
