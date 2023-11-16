@@ -17,7 +17,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           if [ $GITHUB_REF == 'refs/heads/main' ]; then
-            aws ecr get-login-password --region eu-west-1 --username AWS --password-stdin 244530008913.dkr.ecr.eu-west-1.amazonaws.com
+            aws ecr get-login-password --region eu-west-1
             rev=$(git rev-parse --short HEAD)
             docker build . -t ${{github.sha.short}}
             docker tag ${{github.sha.short}} kan-2041/${{github.sha.short}}
