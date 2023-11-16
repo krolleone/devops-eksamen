@@ -19,14 +19,14 @@ jobs:
           if [ $GITHUB_REF == 'refs/heads/main' ]; then
             aws ecr get-login-password --region eu-west-1
             rev=$(git rev-parse --short HEAD)
-            docker build . -t ${{github.sha.short}}
-            docker tag ${{github.sha.short}} kan-2041/${{github.sha.short}}
-            docker tag ${{github.sha.short}} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
-            docker push kan-2041/${{github.sha.short}}
+            docker build . -t ${GITHUB_SHA::6}
+            docker tag ${GITHUB_SHA::6} kan-2041/${GITHUB_SHA::6}
+            docker tag ${GITHUB_SHA::6} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
+            docker push kan-2041/${GITHUB_SHA::6}
             docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
           else
             rev=$(git rev-parse --short HEAD)
-            docker build . -t ${{github.sha.short}}
-            docker tag ${{github.sha.short}} kan-2041/${{github.sha.short}}
-            docker tag ${{github.sha.short}} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
+            docker build . -t ${GITHUB_SHA::6}
+            docker tag ${GITHUB_SHA::6} kan-2041/${GITHUB_SHA::6}
+            docker tag ${GITHUB_SHA::6} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
           fi
