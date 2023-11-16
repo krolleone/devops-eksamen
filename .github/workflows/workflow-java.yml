@@ -21,7 +21,9 @@ jobs:
             rev=$(git rev-parse --short HEAD)
             docker build . -t ${GITHUB_SHA::6}
             docker tag ${GITHUB_SHA::6} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
+            docker tag ${GITHUB_SHA::6} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest
             docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
+            docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest
           else
             rev=$(git rev-parse --short HEAD)
             docker build . -t ${GITHUB_SHA::6}
