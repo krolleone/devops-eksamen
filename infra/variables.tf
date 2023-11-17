@@ -36,7 +36,7 @@ variable "data_policy_statement_effect_allow" {
 
 variable "cpu" {
   type = string
-  default = "2 vCPU"
+  default = "2048"
 }
 
 variable "memory" {
