@@ -66,13 +66,3 @@ jobs:
         working-directory: ./infra
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -var="prefix=$PREFIX" -var="image=$IMAGE"  -auto-approve
-
-      - name: Wait for App Runner Service
-        run: |
-          while true; do
-            status=$(aws apprunner describe-service --service-arn kan-2041 --query "Service.Status" --output text)
-            if [ "$status" != "SERVICE_UPDATE_IN_PROGRESS" ]; then
-              break
-            fi
-            sleep 30
-          done
