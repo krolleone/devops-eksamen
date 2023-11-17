@@ -46,6 +46,16 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
+      - name: Wait for App Runner Service
+        run: |
+          while true; do
+            status=$(aws apprunner describe-service --service-arn kan-2041 --query "Service.Status" --output text)
+            if [ "$status" != "SERVICE_UPDATE_IN_PROGRESS" ]; then
+              break
+            fi
+            sleep 30
+          done
+
       - name: Terraform Init
         working-directory: ./infra
         id: init
