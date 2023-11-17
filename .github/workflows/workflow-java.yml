@@ -47,18 +47,22 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
+        working-directory: ./infra
         id: init
         run: terraform init
 
       - name: Terraform Plan
+        working-directory: ./infra
         id: plan
         run: terraform plan   -var="prefix=$PREFIX" -var="image=$IMAGE"  -no-color
         continue-on-error: true
 
       - name: Terraform Plan Status
+        working-directory: ./infra
         if: steps.plan.outcome == 'failure'
         run: exit 1
 
       - name: Terraform Apply
+        working-directory: ./infra
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -var="prefix=$PREFIX" -var="image=$IMAGE"  -auto-approve
