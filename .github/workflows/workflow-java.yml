@@ -49,7 +49,7 @@ jobs:
       - name: Wait for App Runner Service
         run: |
           while true; do
-            status=$(aws apprunner describe-service --service-arn kan-2041 --query "Service.Status" --output text)
+            status=$(aws apprunner describe-service --service-arn arn:aws:apprunner:eu-west-1:244530008913:service/kan-2041/5cc5f541a3c94990af99a73663801e7e --query "Service.Status" --output text)
             if [ "$status" != "SERVICE_UPDATE_IN_PROGRESS" ]; then
               break
             fi
