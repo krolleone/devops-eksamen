@@ -46,11 +46,15 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      - name: Wait for App Runner Service
-        run: |
+      - name: Find status
+        env:
+          STATUS: status=$(aws apprunner describe-service --service-arn arn:aws:apprunner:eu-west-1:244530008913:service/kan-2041/5cc5f541a3c94990af99a73663801e7e --query "Service.Status" --output text)
+        run: echo "$STATUS"
+  #    - name: Wait for App Runner Service
+  #      run: |
   #        while true; do
-            status=$(aws apprunner describe-service --service-arn arn:aws:apprunner:eu-west-1:244530008913:service/kan-2041/5cc5f541a3c94990af99a73663801e7e --query "Service.Status" --output text)
-            echo "$status"
+  #          status=$(aws apprunner describe-service --service-arn arn:aws:apprunner:eu-west-1:244530008913:service/kan-2041/5cc5f541a3c94990af99a73663801e7e --query "Service.Status" --output text)
+  #          echo "$status"
   #          if [ "$status" != "SERVICE_OPERATION_IN_PROGRESS" ]; then
   #            break
   #
