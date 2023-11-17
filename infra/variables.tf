@@ -36,10 +36,10 @@ variable "data_policy_statement_effect_allow" {
 
 variable "cpu" {
   type = string
-  default = "1 vCPU"
+  default = "2 vCPU"
 }
 
 variable "memory" {
   type = string
-  default = "2 GB"
+  default = "4 GB"
 }
