@@ -47,7 +47,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Wait
-        run: sleep 300s
+        run: sleep 360s
 
       - name: Terraform Init
         working-directory: ./infra

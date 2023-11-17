@@ -8,3 +8,9 @@ For å få GitHub Actions workflow til å kjøre frå din GitHub-konto, må du:
 =======
  - Til slutt må du gjøre ein push til både main-branch og til ein anna vilkårlig branch for å teste at den både bygger og deployer når man pusher til main, og at den berre bygger når du pusher til ein anna branch enn main.
  
+## 3. b)
+
+Eg tar som utgangspunkt at du har gjort steget over, så å beskrive at du trenger egne IAM nøkkel-par tar eg for gitt at allerede er gjort.
+Eg tar også som utgangspunkt at du har tenkt å bruke image i mitt ECR-repo.
+Terraform state fil ligger i bucketen me har brukt gjennom faget, som spesifisert i oppgavetekst, så den trenger du heller ikkje tenke på.
+Så i utgangspunktet trur eg du skal kunne gjøre push på main og ein vilkårlig branch for å teste, uten å måtte endre noko.

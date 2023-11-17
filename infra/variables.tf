@@ -10,7 +10,7 @@ variable "service_name" {
 
 variable "port" {
   type = string
-  default = "8081"
+  default = "8080"
 }
 
 variable "aws_iam_role" {
@@ -36,10 +36,10 @@ variable "data_policy_statement_effect_allow" {
 
 variable "cpu" {
   type = string
-  default = "2 vCPU"
+  default = "1 vCPU"
 }
 
 variable "memory" {
   type = string
-  default = "4 GB"
+  default = "2 GB"
 }
