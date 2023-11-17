@@ -18,7 +18,7 @@ variable "aws_iam_policy" {
   default = "kan-2041-iam-policy"
 }
 
-variable "image_repository_image_identifier" {
+variable "image" {
   type = string
   default = "244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest"
 }
