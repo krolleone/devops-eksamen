@@ -1,3 +1,8 @@
+variable "prefix" {
+  type = string
+  default = "kan-2041-ecr"
+}
+
 variable "service_name" {
   type = string
   default = "kan-2041"
