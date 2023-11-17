@@ -10,21 +10,31 @@ variable "port" {
 
 variable "aws_iam_role" {
   type = string
-  default = "kjell-role-thingy"
+  default = "kan-2041-iam-role"
 }
 
 variable "aws_iam_policy" {
   type = string
-  default = "kjell-apr-policy-thingy"
+  default = "kan-2041-iam-policy"
 }
 
 variable "image_repository_image_identifier" {
   type = string
-  default = "244530008913.dkr.ecr.eu-west-1.amazonaws.com/kjell:latest"
+  default = "244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest"
 }
 
 // Could make another variable for disallow, but opted out since it wont be used
 variable "data_policy_statement_effect_allow" {
   type = string
   default = "Allow"
+}
+
+variable "cpu" {
+  type = string
+  default = "1 vCPU"
+}
+
+variable "memory" {
+  type = string
+  default = "2 GB"
 }
