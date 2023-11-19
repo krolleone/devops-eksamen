@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.s3rekognition.S3Util;
 
+import java.util.Arrays;
+
 @Controller
 public class UploadController {
 
@@ -20,21 +22,25 @@ public class UploadController {
     @PostMapping("/upload")
     public String handleUploadForm(Model model, String description, @RequestParam("file") MultipartFile multipart) {
 
+        String[] extensions = {".jpg", ".jpeg", ".png"};
         String fileName = multipart.getOriginalFilename();
 
-        System.out.println("Description: " + description);
-        System.out.println("filename: " + fileName);
+        boolean checkExtension = Arrays.stream(extensions)
+                .anyMatch(ext -> fileName.endsWith(ext));
 
-        String message = "";
+        String msg = "";
 
-        try {
-            S3Util.uploadFile(fileName, multipart.getInputStream());
-            message = "Your file has been uploaded successfully!";
-        } catch (Exception ex) {
-            message = "Error uploading file: " + ex.getMessage();
+        if (checkExtension){
+            try {
+                S3Util.uploadFile(fileName, multipart.getInputStream());
+                msg = "Your file has been uploaded successfully!";
+            } catch (Exception ex) {
+                msg = "Error uploading file: " + ex.getMessage();
+            }
+        } else {
+            msg = "Not a supported file-type";
         }
-
-        model.addAttribute("message", message);
+        model.addAttribute("message", msg);
 
         return "message";
     }

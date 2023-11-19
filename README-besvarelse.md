@@ -14,3 +14,10 @@ Eg tar som utgangspunkt at du har gjort steget over, så å beskrive at du treng
 Eg tar også som utgangspunkt at du har tenkt å bruke image i mitt ECR-repo.
 Terraform state fil ligger i bucketen me har brukt gjennom faget, som spesifisert i oppgavetekst, så den trenger du heller ikkje tenke på.
 Så i utgangspunktet trur eg du skal kunne gjøre push på main og ein vilkårlig branch for å teste, uten å måtte endre noko.
+
+## 4. a)
+
+Eg har valgt å lage 2 nye endepunkt som fungerer sammen, for å tillate bruker(e) å laste opp til min bucket. 
+Dette primært for å gjøre det enkelt for bruker(e) å få verifisert om de bryter PPE-reglementet.
+"/" - Ei simpel, visuell side der bruker kan velge ei lokal fil på disk for å laste opp til bucket.
+"/upload" - Tar seg av sjølve opplastinga til S3-bucket.
