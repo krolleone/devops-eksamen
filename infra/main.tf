@@ -73,3 +73,33 @@ resource "aws_iam_role_policy_attachment" "attachment" {
   policy_arn = aws_iam_policy.policy.arn
 }
 
+resource "aws_cloudwatch_dashboard" "main" {
+  dashboard_name = var.dashboard_name
+  dashboard_body = <<VerneVokterneDashboard
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          [
+            "${var.face_violation}",
+            "total_scans.value",
+            "total_face_violations",
+            "total_face_non_violations"
+          ]
+        ],
+        "period": 3,
+        "stat": "Maximum",
+        "region": "${var.region}",
+        "title": "PPE-Face violation VS non-violation"
+      }
+    }
+  ]
+}
+VerneVokterneDashboard
+}

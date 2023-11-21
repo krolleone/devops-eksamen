@@ -14,11 +14,25 @@ import java.util.Arrays;
 @Controller
 public class UploadController {
 
+    /**
+     * This endpoint is a visual entrypoint to allow a user to upload images to the S3 bucket.
+     *
+     * @return
+     */
     @GetMapping("")
     public String viewHomePage() {
         return "upload";
     }
 
+    /**
+     * This endpoint takes the file that the user wants to upload, and does some bare minimum checks
+     * before it runs the logic behind the upload to S3 bucket.
+     *
+     * @param model
+     * @param description
+     * @param multipart
+     * @return
+     */
     @PostMapping("/upload")
     public String handleUploadForm(Model model, String description, @RequestParam("file") MultipartFile multipart) {
 

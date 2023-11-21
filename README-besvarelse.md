@@ -21,3 +21,10 @@ Eg har valgt å lage 2 nye endepunkt som fungerer sammen, for å tillate bruker(
 Dette primært for å gjøre det enkelt for bruker(e) å få verifisert om de bryter PPE-reglementet.
 "/" - Ei simpel, visuell side der bruker kan velge ei lokal fil på disk for å laste opp til bucket.
 "/upload" - Tar seg av sjølve opplastinga til S3-bucket.
+
+### Metrics
+
+Første metric eg har valgt å implementere, er ein generell Meter som måler antall bilder som bryter med- og som overholder
+PPE-reglementet i VerneVokterne. Dette for at firmaet skal kunne føre statestikk over reglement-brudd, og potensielt ha
+en rask kilde som henvisning.
+

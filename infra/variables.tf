@@ -13,6 +13,11 @@ variable "port" {
   default = "8080"
 }
 
+variable "region" {
+  type = string
+  default = "eu-west-1"
+}
+
 variable "aws_iam_role" {
   type = string
   default = "kan-2041-iam-role"
@@ -28,7 +33,6 @@ variable "image" {
   default = "244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest"
 }
 
-// Could make another variable for disallow, but opted out since it wont be used
 variable "data_policy_statement_effect_allow" {
   type = string
   default = "Allow"
@@ -42,4 +46,14 @@ variable "cpu" {
 variable "memory" {
   type = string
   default = "2 GB"
+}
+
+variable "dashboard_name" {
+  type = string
+  default = "VerneVokterne"
+}
+
+variable "face_violation" {
+  type = string
+  default = "Violations vs non-violations in FACE-region"
 }
