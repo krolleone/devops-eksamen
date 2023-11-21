@@ -19,7 +19,7 @@ public class MetricsConfig {
     public CloudWatchAsyncClient cloudWatchAsyncClient() {
         return CloudWatchAsyncClient
                 .builder()
-                .region(Region.EU_WEST_1)
+                .region(Region.EU_NORTH_1)
                 .build();
     }
 

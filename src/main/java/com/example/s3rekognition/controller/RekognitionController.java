@@ -12,6 +12,7 @@ import com.example.s3rekognition.PPEClassificationResponse;
 import com.example.s3rekognition.PPEResponse;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +38,11 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     private MeterRegistry meterRegistry;
 
 
-    public RekognitionController() {
+    @Autowired
+    public RekognitionController(MeterRegistry meterRegistry) {
         this.s3Client = AmazonS3ClientBuilder.standard().build();
         this.rekognitionClient = AmazonRekognitionClientBuilder.standard().build();
+        this.meterRegistry = meterRegistry;
     }
 
     /**
