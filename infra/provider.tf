@@ -8,6 +8,6 @@ terraform {
   backend "s3" {
     bucket = "kan-2041-state-bucket"
     key    = "kan-2041/apprunner-actions.state"
-    region = var.region
+    region = "eu-west-1"
   }
 }
