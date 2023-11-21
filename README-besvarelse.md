@@ -26,5 +26,5 @@ Dette primært for å gjøre det enkelt for bruker(e) å få verifisert om de br
 
 Første metric eg har valgt å implementere, er ein generell Meter som måler antall bilder som bryter med- og som overholder
 PPE-reglementet i VerneVokterne. Dette for at firmaet skal kunne føre statestikk over reglement-brudd, og potensielt ha
-en rask kilde som henvisning. 
+en rask kilde som henvisning.
 
