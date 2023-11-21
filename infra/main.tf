@@ -93,7 +93,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             "total_face_non_violations"
           ]
         ],
-        "period": 3,
+        "period": 60,
         "stat": "Maximum",
         "region": "${var.region}",
         "title": "PPE-Face violation VS non-violation"
