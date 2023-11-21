@@ -75,7 +75,7 @@ resource "aws_iam_role_policy_attachment" "attachment" {
 
 resource "aws_cloudwatch_dashboard" "main" {
   dashboard_name = var.dashboard_name
-  dashboard_body = <<VerneVokterneDashboard
+  dashboard_body = <<DASHBOARD
 {
   "widgets": [
     {
@@ -89,17 +89,17 @@ resource "aws_cloudwatch_dashboard" "main" {
           [
             "${var.face_violation}",
             "total_scans.value",
-            "total_face_violations",
-            "total_face_non_violations"
+            "total_face_violations.value",
+            "total_face_non_violations.value"
           ]
         ],
         "period": 60,
         "stat": "Maximum",
-        "region": "${var.region}",
+        "region": "eu-north-1",
         "title": "PPE-Face violation VS non-violation"
       }
     }
   ]
 }
-VerneVokterneDashboard
+DASHBOARD
 }

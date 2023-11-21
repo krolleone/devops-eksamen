@@ -50,7 +50,7 @@ variable "memory" {
 
 variable "dashboard_name" {
   type = string
-  default = "VerneVokterne"
+  default = "kan-2041-dashboard"
 }
 
 variable "face_violation" {
