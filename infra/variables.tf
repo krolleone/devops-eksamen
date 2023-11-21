@@ -53,7 +53,7 @@ variable "dashboard_name" {
   default = "kan-2041-dashboard"
 }
 
-variable "face_violation" {
+variable "total_face_ppe_scans" {
   type = string
-  default = "Violations vs non-violations in FACE-region"
+  default = "Total scans of Face-violations"
 }

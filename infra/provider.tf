@@ -6,8 +6,8 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "pgr301-2021-terraform-state"
+    bucket = "kan-2041-state-bucket"
     key    = "kan-2041/apprunner-actions.state"
-    region = "eu-north-1"
+    region = var.region
   }
 }

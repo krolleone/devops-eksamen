@@ -7,7 +7,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.example.s3rekognition.FaceViolation;
 import com.example.s3rekognition.PPEClassificationResponse;
 import com.example.s3rekognition.PPEResponse;
 import io.micrometer.core.instrument.Gauge;
@@ -33,7 +32,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
     private static final Logger logger = Logger.getLogger(RekognitionController.class.getName());
 
-    private Map<String, Boolean> inViolation = new HashMap<String, Boolean>();
+    private Map<String, PPEClassificationResponse> ppeFaceScans = new HashMap();
 
     private MeterRegistry meterRegistry;
 
@@ -84,13 +83,14 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
             // If any person on an image lacks PPE on the face, it's a violation of regulations
             boolean violation = isViolation(result);
 
-            inViolation.put(image.getKey(), violation);
 
             logger.info("scanning " + image.getKey() + ", violation result " + violation);
             // Categorize the current image as a violation or not.
             int personCount = result.getPersons().size();
             PPEClassificationResponse classification = new PPEClassificationResponse(image.getKey(), personCount, violation);
             classificationResponses.add(classification);
+
+            ppeFaceScans.put(image.getKey(), classification);
         }
         PPEResponse ppeResponse = new PPEResponse(bucketName, classificationResponses);
         return ResponseEntity.ok(ppeResponse);
@@ -117,9 +117,10 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
         // Total Face-scans
-        Gauge.builder("total_scans", inViolation,
+        Gauge.builder("total_scans", ppeFaceScans,
                 b -> b.values().size()).register(meterRegistry);
 
+        /*
         // Total amount of violations
         Gauge.builder("total_face_violations", inViolation,
                 b -> b.values().stream()
@@ -131,5 +132,6 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                 b -> b.values().stream()
                         .filter(v -> !v)
                         .count()).register(meterRegistry);
+         */
     }
 }

@@ -87,16 +87,14 @@ resource "aws_cloudwatch_dashboard" "main" {
       "properties": {
         "metrics": [
           [
-            "${var.face_violation}",
-            "total_scans.value",
-            "total_face_violations.value",
-            "total_face_non_violations.value"
+            "${var.total_face_ppe_scans}",
+            "total_scans.value"
           ]
         ],
         "period": 60,
         "stat": "Maximum",
-        "region": "eu-north-1",
-        "title": "PPE-Face violation VS non-violation"
+        "region": "${var.region}",
+        "title": "Total PPE Scans"
       }
     }
   ]
