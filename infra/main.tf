@@ -59,6 +59,12 @@ data "aws_iam_policy_document" "policy" {
     actions   = ["cloudwatch:*"]
     resources = ["*"]
   }
+
+  statement  {
+    effect    = var.data_policy_statement_effect_allow
+    actions   = ["apprunner:*"]
+    resources = ["*"]
+  }
 }
 
 resource "aws_iam_policy" "policy" {
