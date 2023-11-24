@@ -25,6 +25,10 @@ jobs:
             docker build . -t ${GITHUB_SHA::6}
             docker tag ${GITHUB_SHA::6} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
             docker tag ${GITHUB_SHA::6} 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+          run: |
+            docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
+            docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -49,9 +53,3 @@ jobs:
         working-directory: ./infra
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -var="prefix=$PREFIX" -var="image=$IMAGE"  -auto-approve
-
-      - name: Push image if push to main
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: |
-          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:$rev
-          docker push 244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest
