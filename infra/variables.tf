@@ -62,3 +62,8 @@ variable "student_name" {
   type = string
   default = "daha023"
 }
+
+variable "test-iam-role" {
+  type = string
+  default = "kan-2041-test-iam-role"
+}
