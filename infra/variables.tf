@@ -58,11 +58,6 @@ variable "total_face_ppe_scans" {
   default = "Total scans of Face-violations"
 }
 
-variable "student_name" {
-  type = string
-  default = "daha023"
-}
-
 variable "test-iam-role" {
   type = string
   default = "kan-2041-test-iam-role"
