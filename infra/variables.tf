@@ -8,6 +8,11 @@ variable "service_name" {
   default = "kan-2041"
 }
 
+variable "cw_name" {
+  type = string
+  default = "kan-2041-cw"
+}
+
 variable "port" {
   type = string
   default = "8080"
