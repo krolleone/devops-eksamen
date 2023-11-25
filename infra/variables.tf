@@ -57,8 +57,3 @@ variable "total_face_ppe_scans" {
   type = string
   default = "Total scans of Face-violations"
 }
-
-variable "test-iam-role" {
-  type = string
-  default = "kan-2041-test-iam-role"
-}

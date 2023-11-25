@@ -23,7 +23,7 @@ resource "aws_apprunner_service" "service" {
 }
 
 resource "aws_iam_role" "role_for_apprunner_service" {
-  name               = var.test-iam-role
+  name               = var.aws_iam_role
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -31,13 +31,13 @@ resource "aws_iam_role" "role_for_apprunner_service" {
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
-    actions = ["sts:AssumeRole"]
 
     principals {
-      identifiers = ["lambda.amazonaws.com"]
       type        = "Service"
+      identifiers = ["tasks.apprunner.amazonaws.com"]
     }
 
+    actions = ["sts:AssumeRole"]
   }
 }
 
