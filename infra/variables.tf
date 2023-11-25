@@ -33,7 +33,7 @@ variable "image" {
   default = "244530008913.dkr.ecr.eu-west-1.amazonaws.com/kan-2041-ecr:latest"
 }
 
-variable "data_policy_statement_effect_allow" {
+variable "allow" {
   type = string
   default = "Allow"
 }

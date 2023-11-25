@@ -43,25 +43,25 @@ data "aws_iam_policy_document" "assume_role" {
 
 data "aws_iam_policy_document" "policy" {
   statement {
-    effect    = var.data_policy_statement_effect_allow
+    effect    = var.allow
     actions   = ["rekognition:*"]
     resources = ["*"]
   }
   
   statement  {
-    effect    = var.data_policy_statement_effect_allow
+    effect    = var.allow
     actions   = ["s3:*"]
     resources = ["*"]
   }
 
   statement  {
-    effect    = var.data_policy_statement_effect_allow
+    effect    = var.allow
     actions   = ["cloudwatch:*"]
     resources = ["*"]
   }
 
   statement  {
-    effect    = var.data_policy_statement_effect_allow
+    effect    = var.allow
     actions   = ["apprunner:*"]
     resources = ["*"]
   }
