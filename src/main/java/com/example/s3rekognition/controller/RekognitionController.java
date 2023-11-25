@@ -22,6 +22,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     private final AmazonRekognition rekognitionClient;
 
     private static final Logger logger = Logger.getLogger(RekognitionController.class.getName());
+    private static org.slf4j.Logger log2 = LoggerFactory.getLogger(RekognitionController.class);
+
 
     private Map<String, PPEClassificationResponse> ppeFaceScans = new HashMap();
     private Map<String, Account> theBank = new HashMap();
@@ -145,6 +148,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                 b -> b.values().size()).register(registry);
 
 
+
+
         /*
         // Total Face-scans
         Gauge.builder("total_scans", ppeFaceScans,
@@ -171,6 +176,10 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     }
 
     private Account getOrCreateAccount(String accountId) {
+        log2.debug(String.valueOf(s3Client));
+        log2.debug(String.valueOf(registry));
+        log2.debug(String.valueOf(atlasConfig));
+        log2.debug(String.valueOf(rekognitionClient));
         if (theBank.get(accountId) == null) {
             Account a = new Account();
             a.setId(accountId);

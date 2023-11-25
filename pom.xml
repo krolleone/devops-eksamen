@@ -125,6 +125,17 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.netflix.spectator</groupId>
+            <artifactId>spectator-api</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
