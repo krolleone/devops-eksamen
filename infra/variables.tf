@@ -57,3 +57,8 @@ variable "total_face_ppe_scans" {
   type = string
   default = "Total scans of Face-violations"
 }
+
+variable "student_name" {
+  type = string
+  default = "daha023"
+}

@@ -93,7 +93,7 @@ resource "aws_cloudwatch_dashboard" "main" {
       "properties": {
         "metrics": [
           [
-            "${var.prefix}",
+            "${var.student_name}",
             "account_count.value"
           ]
         ],
