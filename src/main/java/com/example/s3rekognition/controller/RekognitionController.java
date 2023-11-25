@@ -46,7 +46,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     private Map<String, PPEClassificationResponse> ppeFaceScans = new HashMap();
     private Map<String, Account> theBank = new HashMap();
 
-    //private MeterRegistry meterRegistry;
+    private MeterRegistry meterRegistry;
+
     AtlasConfig atlasConfig = new AtlasConfig() {
 
         @Override
@@ -60,14 +61,15 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         }
     };
 
-    MeterRegistry registry = new AtlasMeterRegistry(atlasConfig, Clock.SYSTEM);
+
+    //MeterRegistry registry = new AtlasMeterRegistry(atlasConfig, Clock.SYSTEM);
 
 
     @Autowired
-    public RekognitionController(MeterRegistry meterRegistry) {
+    public RekognitionController() {
         this.s3Client = AmazonS3ClientBuilder.standard().build();
         this.rekognitionClient = AmazonRekognitionClientBuilder.standard().build();
-        //this.meterRegistry = meterRegistry;
+        this.meterRegistry = new AtlasMeterRegistry(atlasConfig, Clock.SYSTEM);
     }
 
     /**
@@ -143,7 +145,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
         Gauge.builder("account_count", theBank,
-                b -> b.values().size()).register(registry);
+                b -> b.values().size()).register(meterRegistry);
 
 
 
@@ -191,7 +193,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     @PostMapping(path = "/account", consumes = "application/json",
             produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
-        registry.counter("update_account").increment();
+        meterRegistry.counter("update_account").increment();
         Account account = getOrCreateAccount(a.getId());
         account.setBalance(a.getBalance());
         account.setCurrency(a.getCurrency());
@@ -208,7 +210,7 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     @Timed
     @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
-        registry.counter("balance").increment();
+        meterRegistry.counter("balance").increment();
         Account account = ofNullable(theBank.get(accountId)).orElseThrow(AccountNotFoundException::new);
 
         // Random timer to simulate dely
