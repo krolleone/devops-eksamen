@@ -139,6 +139,16 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     }
 
     private static boolean isTotalViolation(DetectProtectiveEquipmentResult result) {
+        List<String> requiredParts = Arrays.asList("FACE", "HAND_COVER", "HEAD_COVER");
+        return result.getPersons().stream()
+                .flatMap(p -> p.getBodyParts().stream())
+                .filter(bodyPart -> requiredParts.contains(bodyPart.getName()))
+                .anyMatch(bodyPart -> bodyPart.getEquipmentDetections().isEmpty());
+    }
+
+
+    /*
+    private static boolean isTotalViolation(DetectProtectiveEquipmentResult result) {
         return result.getPersons().stream()
                 .flatMap(p -> p.getBodyParts().stream())
                 .anyMatch(bodyPart -> {
@@ -148,6 +158,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                             bodyPart.getEquipmentDetections().isEmpty();
                 });
     }
+
+     */
 
 
     /**
