@@ -33,7 +33,7 @@ min desperasjon etter å få metrics til å fungere, gjekk eg vekk frå denne l�
 dette potensielt kunne løyse problemet mitt. Dette medførte ei rekke forandringer eg måtte gjere, som igjen medførte at eg
 måtte slette den apprunner-servicen eg hadde køyrande i første omgang. Eg har siden sletta app-runner ved 2 anledninger, så
 app-runner logger er ikkje lengre tilgjengelig (kanskje gjennom CloudTrail, men ikkje direkte applikasjonslogger frå ein 
-kjørande app-runner instans).
+kjørande app-runner instans). 
 
 Eg forsøkte også å kopiere alt av nødvendig kode i "cloudwatch_alarms_terraform"-øvingen for å sjå om eg får det til å fungere
 ved å bruke den istedet, for så å endre den fungerende koden steg for steg til å tilpasse denne eksamen, men fortsatt uten hell,
