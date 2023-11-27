@@ -5,7 +5,7 @@ variable "threshold" {
 
 variable "alarm_email" {
   type = string
-  default = "flat_vegg@gmail.com"
+  default = "flat_vegg@hotmail.com"
 }
 
 variable "prefix" {
