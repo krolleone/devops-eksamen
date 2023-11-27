@@ -62,3 +62,8 @@ variable "total_face_ppe_scans" {
   type = string
   default = "Total scans of Face-violations"
 }
+
+variable "alarm_email" {
+  type = string
+  default = "flat_vegg@gmail.com"
+}

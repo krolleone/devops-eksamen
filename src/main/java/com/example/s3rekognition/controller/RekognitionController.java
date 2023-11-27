@@ -139,16 +139,6 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     }
 
     private static boolean isTotalViolation(DetectProtectiveEquipmentResult result) {
-        List<String> requiredParts = Arrays.asList("FACE", "HAND_COVER", "HEAD_COVER");
-        return result.getPersons().stream()
-                .flatMap(p -> p.getBodyParts().stream())
-                .filter(bodyPart -> requiredParts.contains(bodyPart.getName()))
-                .anyMatch(bodyPart -> bodyPart.getEquipmentDetections().isEmpty());
-    }
-
-
-    /*
-    private static boolean isTotalViolation(DetectProtectiveEquipmentResult result) {
         return result.getPersons().stream()
                 .flatMap(p -> p.getBodyParts().stream())
                 .anyMatch(bodyPart -> {
@@ -158,9 +148,6 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
                             bodyPart.getEquipmentDetections().isEmpty();
                 });
     }
-
-     */
-
 
     /**
      * Detects if the image has a protective gear violation for the FACE bodypart-
@@ -183,30 +170,44 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         // Total Face-scans
         Gauge.builder("total_scans", ppeFaceScans,
-                b -> b.values().size()).register(meterRegistry);
+                b -> b.values().size())
+                .register(meterRegistry);
         // Total non-violations in Face-region
         Gauge.builder("non_violations", ppeFaceScans,
                 b -> b.values().stream()
                         .filter(v -> !v.isViolation())
-                        .count()).register(meterRegistry);
+                        .count())
+                .register(meterRegistry);
         // Total violations in Face-region
         Gauge.builder("violations", ppeFaceScans,
                 b -> b.values().stream()
                         .filter(v -> v.isViolation())
-                        .count()).register(meterRegistry);
+                        .count())
+                .register(meterRegistry);
 
         // Total scans all regions
         Gauge.builder("total_full_scans", ppeAllRegionsScans,
-                b -> b.values().size()).register(meterRegistry);
+                b -> b.values().size())
+                .register(meterRegistry);
         // Total non-violations in all regions
         Gauge.builder("non_violations_all_regions", ppeAllRegionsScans,
                 b -> b.values().stream()
                         .filter(v -> !v.isViolation())
-                        .count()).register(meterRegistry);
+                        .count())
+                .register(meterRegistry);
         // Total violations in all regions
         Gauge.builder("violations_all_regions", ppeAllRegionsScans,
                 b -> b.values().stream()
                         .filter(v -> v.isViolation())
-                        .count()).register(meterRegistry);
+                        .count())
+                .register(meterRegistry);
+
+        // Totalt antall personer scannet
+        Gauge.builder("people_count", ppeFaceScans,
+                p -> p.values()
+                        .stream()
+                        .mapToInt(PPEClassificationResponse::getPersonCount)
+                        .sum())
+                .register(meterRegistry);
     }
 }
