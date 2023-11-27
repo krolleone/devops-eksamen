@@ -118,5 +118,9 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
         // Total Face-scans
         Gauge.builder("total_scans", ppeFaceScans,
                 b -> b.values().size()).register(meterRegistry);
+        Gauge.builder("non_violations", ppeFaceScans,
+                b -> b.values().stream()
+                        .filter(v -> !v.isViolation())
+                        .count());
     }
 }

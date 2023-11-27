@@ -3,11 +3,20 @@
 For å få GitHub Actions workflow til å kjøre frå din GitHub-konto, må du:
  - Opprette IAM Access Key og Secret Access key ved å logge inn i AWS, gå til IAM -> Users -> Finn din bruker -> Security credentials -> Create access key. Disse nøklene må tas vare på, for videre bruk.
  - Etter opprettelse av IAM Access Key og Secret Access key, må du gå til https://github.com/<din-fork-av-dette-repoet> -> Settings -> Secrets and variables -> Actions -> Her må du lage 2 nye Repository secrets som du kaller for "AWS_ACCESS_KEY_ID" og "AWS_SECRET_ACCESS_KEY" og bruker den korresponderende verdien fra nøklene du lagde i forrige steg.
-<<<<<<< HEAD
  - Til slutt må du gjøre ein push til både main-branch og til ein anna vilkårlig branch for å teste at den både bygger og deployer når man pusher til main, og at den berre bygger når du pusher til ein anna branch enn main.
-=======
  - Til slutt må du gjøre ein push til både main-branch og til ein anna vilkårlig branch for å teste at den både bygger og deployer når man pusher til main, og at den berre bygger når du pusher til ein anna branch enn main.
  
+## 3. a)
+
+Det står klart og tydelig i aws_apprunner_service dokumentasjon, at verdiene 256 for CPU og 1024 for Memory støttes
+![Instance Config](images/instanceConfig.png)  
+Men når eg programmatisk prøver å sette verdiene til å være lik det som er spesifisert i oppgaveteksten, får eg dette som svar:
+![Int-verdier](images/256_1024.png)  
+![String-verdier](images/vCPU_GB.png)  
+Har forsøkt å sette som reine int-verdier (256/1024) samt string-verdier (0.25 CPU/1 GB), slik dokumentasjonen viser, men
+den nekter la meg gjennomføre terraform plan til tross. Det som frustrerer meg, er at eg manuelt kan gå inn å endre verdiene
+til ønska verdier i ettertid.
+
 ## 3. b)
 
 Eg tar som utgangspunkt at du har gjort steget over, så å beskrive at du trenger egne IAM nøkkel-par tar eg for gitt at allerede er gjort.
@@ -70,6 +79,15 @@ permissions for Firehose.
 Dersom du ser kva eg har gjort feil/mangler, hadde det vært av stor interesse om du kan legge ved ein liten forklaring i sensuren,
 for eg er tom for ideer på nåværende tidspunkt, og veit ikkje kva eg skulle gjort annerledes. Ønsker å vite, slik at eg ved
 neste anledning veit kva eg må gjere. På forhånd takk =)
+
+# OPPDATERING 27/11 KL.19.58
+
+Ved revertering tilbake til gamle koden, har noko uforklarlig skjedd. Plutselig får eg rapportert inn data til metrikkene mine
+og eg forstår ikkje kva eg har gjort annerledes/kvifor det ikkje fungerte tidligere, men no plutselig har bestemt seg for å 
+fungere. Eg skal prøve å bruke resten av kvelden på å implementere ønska funksjonalitet, men uvisst kor mykje eg klarer gjennomføre
+med så begrensa tid. Hadde eg gjort dette i går, hadde eg forhåpentligvis hatt rikelig med tid til å fullføre.
+![WHAT!?](images/WHAT.png)  
+
 
 ### Metrics tankegang
 
