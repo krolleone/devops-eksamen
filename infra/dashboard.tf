@@ -18,6 +18,10 @@ resource "aws_cloudwatch_dashboard" "main" {
           [
             "${var.dashboard_name}",
             "non_violations.value"
+          ],
+          [
+            "${var.dashboard_name}",
+            "violations.value"
           ]
         ],
         "period": 60,
