@@ -9,7 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   period              = "60"
   statistic           = "Maximum"
 
-  alarm_description = "This alarm goes off as soon as the total amount of people scanned exceeds 22"
+  alarm_description = "This alarm goes off as soon as the total amount of people scanned exceeds 25"
   alarm_actions     = [aws_sns_topic.user_updates.arn]
 }
 

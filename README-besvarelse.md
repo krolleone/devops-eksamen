@@ -8,14 +8,14 @@ For å få GitHub Actions workflow til å kjøre frå din GitHub-konto, må du:
  
 ## 3. a)
 
-Det står klart og tydelig i aws_apprunner_service dokumentasjon, at verdiene 256 for CPU og 1024 for Memory støttes
+Det står klart og tydelig i aws_apprunner_service dokumentasjon, at verdiene 256 for CPU og 1024 for Memory støttes:  
 ![Instance Config](images/instanceConfig.png)  
-Men når eg programmatisk prøver å sette verdiene til å være lik det som er spesifisert i oppgaveteksten, får eg dette som svar:
+Men når eg programmatisk prøver å sette verdiene til å være lik det som er spesifisert i oppgaveteksten, får eg dette som svar:  
 ![Int-verdier](images/256_1024.png)  
 ![String-verdier](images/vCPU_GB.png)  
-Har forsøkt å sette som reine int-verdier (256/1024) samt string-verdier (0.25 CPU/1 GB), slik dokumentasjonen viser, men
-den nekter la meg gjennomføre terraform plan til tross. Det som frustrerer meg, er at eg manuelt kan gå inn å endre verdiene
-til ønska verdier i ettertid.
+Har forsøkt å sette som reine int-verdier (256/1024) samt string-verdier (0.25 CPU/1 GB), slik dokumentasjonen viser, men  
+den nekter la meg gjennomføre terraform plan til tross. Det som frustrerer meg, er at eg manuelt kan gå inn å endre verdiene  
+til ønska verdier i ettertid.  
 
 ## 3. b)
 
@@ -30,6 +30,8 @@ Eg har valgt å lage 2 nye endepunkt som fungerer sammen, for å tillate bruker(
 Dette primært for å gjøre det enkelt for bruker(e) å få verifisert om de bryter PPE-reglementet.
 "/" - Ei simpel, visuell side der bruker kan velge ei lokal fil på disk for å laste opp til bucket.
 "/upload" - Tar seg av sjølve opplastinga til S3-bucket.
+I tillegg har eg laga eit til endepunkt for å scanne PPE utstyr i alle regioner
+"/scan-all-ppe"
 
 ### Metrics problemer
 
@@ -85,8 +87,15 @@ neste anledning veit kva eg må gjere. På forhånd takk =)
 Ved revertering tilbake til gamle koden, har noko uforklarlig skjedd. Plutselig får eg rapportert inn data til metrikkene mine
 og eg forstår ikkje kva eg har gjort annerledes/kvifor det ikkje fungerte tidligere, men no plutselig har bestemt seg for å 
 fungere. Eg skal prøve å bruke resten av kvelden på å implementere ønska funksjonalitet, men uvisst kor mykje eg klarer gjennomføre
-med så begrensa tid. Hadde eg gjort dette i går, hadde eg forhåpentligvis hatt rikelig med tid til å fullføre.
+med så begrensa tid. Hadde eg gjort dette i går, hadde eg forhåpentligvis hatt rikelig med tid til å levere tilfredsstillande metrics.
 ![WHAT!?](images/WHAT.png)  
+For å kompensere, har eg fått førstnevnte metrikken til å fungere slik eg hadde tenkt, at den viser totalt antall Face-scans,
+og antall violations vs non-violations.
+Intensjonen var å videreføre denne, lage eit nytt endepunkt for å detektere kor mange som overholdt alle PPE-reglementer,
+men etter mykje kluss med streams og begrensa gjenståande tid, fekk eg den berre til å detektere om det er ein eller anna
+form for violation, og den gjer ut samme data som førstnevnte metrikk.
+Eg lagde også ein kjapp gauge for å måle antall mennesker som har blitt scannet totalt, berre for å ha ein anna type
+metrikk å vise til, samt ha ein metrikk som grunnlag for alarm.
 
 
 ### Metrics tankegang
@@ -102,7 +111,16 @@ utenfor steril sone lengre enn nødvendig, og dersom prosesses med å bli analys
 
 ## 4. b)
 
-Då eg ikkje har fått til metrics, vil det også medføre at alarmer heller ikkje lar seg gjennomføre.
+Med så begrensa tid eg hadde tilgjengelig etter at eg endelig fekk til å sende og motta metrikk-data, snekret eg berre opp
+ein kjapp alarm som sender ein e-post til min dummy-epost, berre for å vise at det lar seg gjøre. Det er på ingen måte
+optimalisert eller gjort noko spesiell tanke bak den alarmen, då eg måtte berre få noko opp å kjøre på kort tid.
+For at den skal gå over til å være In Alarm, er du nødt til å laste opp eit nytt bilde i min S3-bucket, som inneholder 
+minimum 6 personer. Skulle veldig gjerne gjort ein bedre jobb, og hadde planer om å holde på gjennom natta, men på det her
+tidspunktet, begynner augene mine å bli blurry og lokkene ganske tunge, så mest sannsynlig blir eg nødt til å kapitulere
+om ikkje veldig lenge.
+NB: Skriver ikkje dette for å få medlidenhet, men heller i håp om tilbakemelding på kva eg har gjort gale tidligare, slik 
+at dette kan fungere som eit læringsøyeblikk, for eg har klødd meg så mykje i skallen i løpet av all tida eg har forsøkt
+å feilsøke til ingen nytte, og så skal ting plutselig fungere uten at eg veit nøyaktig kva eg har gjort feil tidligere.
 
 ## 4. Drøfteoppgaver
 ### A - Kontinuerlig Integrering
@@ -284,6 +302,3 @@ identifisere kor feilen ligger, som igjen gjør det (relativt) enkelt å fikse u
 Overvåkning av systemet gjennom metrikker gjer det mulig for Operasjons-delen av DevOps å holde systemet ved like.
 Tilbakemeldinger og brukerundersøkelser kan være med på å gje verdifull innsikt i kva deler av systemet brukere er nøgd med, 
 og kva som trengs å forbedres, samt potensielt gi ein indikator på ønska ny funksjonalitet for framtidig forbedring.
-
-
-
