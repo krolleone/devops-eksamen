@@ -2,9 +2,9 @@ resource "aws_apprunner_service" "service" {
   service_name = var.service_name
 
   instance_configuration {
-    cpu = var.cpu
+    cpu = "256"
     instance_role_arn = aws_iam_role.role_for_apprunner_service.arn
-    memory = var.memory
+    memory = "1024"
   }
 
   source_configuration {
@@ -78,36 +78,3 @@ resource "aws_iam_role_policy_attachment" "attachment" {
   role       = aws_iam_role.role_for_apprunner_service.name
   policy_arn = aws_iam_policy.policy.arn
 }
-
-
-
-/*
-resource "aws_cloudwatch_dashboard" "main" {
-  dashboard_name = var.dashboard_name
-  dashboard_body = <<DASHBOARD
-{
-  "widgets": [
-    {
-      "type": "metric",
-      "x": 0,
-      "y": 0,
-      "width": 12,
-      "height": 6,
-      "properties": {
-        "metrics": [
-          [
-            "${var.total_face_ppe_scans}",
-            "total_scans.value"
-          ]
-        ],
-        "period": 60,
-        "stat": "Maximum",
-        "region": "${var.region}",
-        "title": "Total PPE Scans"
-      }
-    }
-  ]
-}
-DASHBOARD
-}
-*/

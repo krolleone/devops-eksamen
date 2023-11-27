@@ -13,13 +13,13 @@ resource "aws_cloudwatch_dashboard" "main" {
         "metrics": [
           [
             "${var.dashboard_name}",
-            "account_count.value"
+            "total_scans.value"
           ]
         ],
-        "period": 300,
+        "period": 60,
         "stat": "Maximum",
         "region": "eu-west-1",
-        "title": "Total number of accounts"
+        "title": "Total PPE Scans"
       }
     }
   ]

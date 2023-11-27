@@ -13,7 +13,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 public class S3Util {
     private static final String BUCKET_NAME = "kan-2041";
 
-    public static void uploadFile(String fileName, InputStream inputStream) throws S3Exception, AwsServiceException, SdkClientException, IOException {
+    public static void uploadFile(String fileName, InputStream inputStream) throws AwsServiceException, SdkClientException, IOException {
 
         S3Client client = S3Client.builder().build();
 

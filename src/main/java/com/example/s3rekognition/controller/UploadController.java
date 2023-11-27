@@ -29,12 +29,11 @@ public class UploadController {
      * before it runs the logic behind the upload to S3 bucket.
      *
      * @param model
-     * @param description
      * @param multipart
      * @return
      */
     @PostMapping("/upload")
-    public String handleUploadForm(Model model, String description, @RequestParam("file") MultipartFile multipart) {
+    public String handleUploadForm(Model model, @RequestParam("file") MultipartFile multipart) {
 
         String[] extensions = {".jpg", ".jpeg", ".png"};
         String fileName = multipart.getOriginalFilename();
@@ -42,7 +41,7 @@ public class UploadController {
         boolean checkExtension = Arrays.stream(extensions)
                 .anyMatch(ext -> fileName.endsWith(ext));
 
-        String msg = "";
+        String msg;
 
         if (checkExtension){
             try {

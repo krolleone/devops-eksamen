@@ -7,31 +7,21 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.example.s3rekognition.Account;
 import com.example.s3rekognition.PPEClassificationResponse;
 import com.example.s3rekognition.PPEResponse;
-import com.netflix.spectator.atlas.AtlasConfig;
-import io.micrometer.atlas.AtlasMeterRegistry;
-import io.micrometer.core.annotation.Timed;
-import io.micrometer.core.instrument.Clock;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import static java.math.BigDecimal.valueOf;
-import static java.util.Optional.ofNullable;
 
 
 @RestController
@@ -44,32 +34,14 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
 
     private Map<String, PPEClassificationResponse> ppeFaceScans = new HashMap();
-    private Map<String, Account> theBank = new HashMap();
 
     private MeterRegistry meterRegistry;
 
-    AtlasConfig atlasConfig = new AtlasConfig() {
-
-        @Override
-        public Duration step() {
-            return Duration.ofSeconds(10);
-        }
-
-        @Override
-        public String get(String s) {
-            return null;
-        }
-    };
-
-
-    //MeterRegistry registry = new AtlasMeterRegistry(atlasConfig, Clock.SYSTEM);
-
-
     @Autowired
-    public RekognitionController() {
+    public RekognitionController(MeterRegistry meterRegistry) {
         this.s3Client = AmazonS3ClientBuilder.standard().build();
         this.rekognitionClient = AmazonRekognitionClientBuilder.standard().build();
-        this.meterRegistry = new AtlasMeterRegistry(atlasConfig, Clock.SYSTEM);
+        this.meterRegistry = meterRegistry;
     }
 
     /**
@@ -143,81 +115,8 @@ public class RekognitionController implements ApplicationListener<ApplicationRea
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-
-        Gauge.builder("account_count", theBank,
-                b -> b.values().size()).register(meterRegistry);
-
-
-
-
-        /*
         // Total Face-scans
         Gauge.builder("total_scans", ppeFaceScans,
                 b -> b.values().size()).register(meterRegistry);
-         */
-
-        /*
-        // Total amount of violations
-        Gauge.builder("total_face_violations", inViolation,
-                b -> b.values().stream()
-                        .filter(v -> v)
-                        .count()).register(meterRegistry);
-
-        // Total amount of non-violations
-        Gauge.builder("total_face_non_violations", inViolation,
-                b -> b.values().stream()
-                        .filter(v -> !v)
-                        .count()).register(meterRegistry);
-         */
-    }
-
-    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "account not found")
-    public static class AccountNotFoundException extends RuntimeException {
-    }
-
-    private Account getOrCreateAccount(String accountId) {
-        if (theBank.get(accountId) == null) {
-            Account a = new Account();
-            a.setId(accountId);
-            theBank.put(accountId, a);
-        }
-        return theBank.get(accountId);
-    }
-
-    /**
-     * Saves an account. Will create a new account if one does not exist.
-     *
-     * @param a the account Object
-     * @return
-     */
-    @PostMapping(path = "/account", consumes = "application/json",
-            produces = "application/json")
-    public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
-        meterRegistry.counter("update_account").increment();
-        Account account = getOrCreateAccount(a.getId());
-        account.setBalance(a.getBalance());
-        account.setCurrency(a.getCurrency());
-        theBank.put(a.getId(), a);
-        return new ResponseEntity<>(a, HttpStatus.OK);
-    }
-
-    /**
-     * Gets account info for an account
-     *
-     * @param accountId the account ID to get info from
-     * @return
-     */
-    @Timed
-    @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Account> balance(@PathVariable String accountId) {
-        meterRegistry.counter("balance").increment();
-        Account account = ofNullable(theBank.get(accountId)).orElseThrow(AccountNotFoundException::new);
-
-        // Random timer to simulate dely
-        try {
-            Thread.sleep((long) (250 * Math.random()));
-        } catch (InterruptedException ignored) {
-        }
-        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 }
