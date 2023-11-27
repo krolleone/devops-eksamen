@@ -87,9 +87,9 @@ neste anledning veit kva eg må gjere. På forhånd takk =)
 Ved revertering tilbake til gamle koden, har noko uforklarlig skjedd. Plutselig får eg rapportert inn data til metrikkene mine
 og eg forstår ikkje kva eg har gjort annerledes/kvifor det ikkje fungerte tidligere, men no plutselig har bestemt seg for å 
 fungere. Eg skal prøve å bruke resten av kvelden på å implementere ønska funksjonalitet, men uvisst kor mykje eg klarer gjennomføre
-med så begrensa tid. Hadde eg gjort dette i går, hadde eg forhåpentligvis hatt rikelig med tid til å levere tilfredsstillande metrics.
+med så begrensa tid. Hadde eg gjort dette i går, hadde eg forhåpentligvis hatt rikelig med tid til å levere tilfredsstillande metrics.  
 ![WHAT!?](images/WHAT.png)  
-For å kompensere, har eg fått førstnevnte metrikken til å fungere slik eg hadde tenkt, at den viser totalt antall Face-scans,
+For å kompensere, har eg fått førstnevnte metrikken til å fungere slik eg hadde tenkt, at den viser totalt antall Face-scans,  
 og antall violations vs non-violations.
 Intensjonen var å videreføre denne, lage eit nytt endepunkt for å detektere kor mange som overholdt alle PPE-reglementer,
 men etter mykje kluss med streams og begrensa gjenståande tid, fekk eg den berre til å detektere om det er ein eller anna
@@ -115,9 +115,14 @@ Med så begrensa tid eg hadde tilgjengelig etter at eg endelig fekk til å sende
 ein kjapp alarm som sender ein e-post til min dummy-epost, berre for å vise at det lar seg gjøre. Det er på ingen måte
 optimalisert eller gjort noko spesiell tanke bak den alarmen, då eg måtte berre få noko opp å kjøre på kort tid.
 For at den skal gå over til å være In Alarm, er du nødt til å laste opp eit nytt bilde i min S3-bucket, som inneholder 
-minimum 6 personer. Skulle veldig gjerne gjort ein bedre jobb, og hadde planer om å holde på gjennom natta, men på det her
+minimum 6 personer, og gå til endepunktet "/scan-ppe?bucketName=kan-2041" slik at ein scan blir gjennomført. Eventuelt
+kan du også senke terskelverdien til å være 19, eller endre comparison_operator til å være "GreaterThanOrEqualToThreshold".
+Begge skal gi utslag, da nåværende antall mennesker scannet i min bucket er 20 personer.
+
+Skulle veldig gjerne gjort ein bedre jobb, og hadde planer om å holde på gjennom natta, men på det her
 tidspunktet, begynner augene mine å bli blurry og lokkene ganske tunge, så mest sannsynlig blir eg nødt til å kapitulere
 om ikkje veldig lenge.
+
 NB: Skriver ikkje dette for å få medlidenhet, men heller i håp om tilbakemelding på kva eg har gjort gale tidligare, slik 
 at dette kan fungere som eit læringsøyeblikk, for eg har klødd meg så mykje i skallen i løpet av all tida eg har forsøkt
 å feilsøke til ingen nytte, og så skal ting plutselig fungere uten at eg veit nøyaktig kva eg har gjort feil tidligere.
